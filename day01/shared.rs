@@ -1,4 +1,5 @@
 use std::fs;
+use Direction::*;
 
 #[derive(Debug)]
 pub enum Instruction {
@@ -24,7 +25,33 @@ pub fn get_input() -> Vec<Instruction> {
       .trim()
       .split(", ")
       .map(Instruction::from)
-      .filter(Option::is_some)
       .map(Option::unwrap)
       .collect()
+}
+
+#[derive(Debug)]
+pub enum Direction {
+   North,
+   East,
+   South,
+   West,
+}
+
+impl Direction {
+   pub fn left(&self) -> Direction {
+      match *self {
+         North => West,
+         East  => North,
+         South => East,
+         West  => South,
+      }
+   }
+   pub fn right(&self) -> Direction {
+      match *self {
+         North => East,
+         East  => South,
+         South => West,
+         West  => North,
+      }
+   }
 }
